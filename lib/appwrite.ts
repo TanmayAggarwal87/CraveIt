@@ -1,13 +1,17 @@
 import { CreateUserParams, SignInParams } from "@/type"
-import { Account, Avatars, Client, Databases, ID, Query } from "react-native-appwrite"
+import { Account, Avatars, Client, Databases, ID, Query, Storage } from "react-native-appwrite"
 
 export const appwriteConfig={
     endpoint:process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT,
     projectId:process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID,
     platform:"com.craveit.foodordering",
     databaseId:"6875ff7c00152890caf1",
+    bucketId:"6878dab6001cdaa342b6",
     userCollectionId:"6875ff9d0006120c3477",
-    
+    categoriesCollectionId:"6878d2ab0000c40e62d2",
+    menuCollectionId:"6878d375000dae9f6c9a",
+    customizationsCollectionId:"6878d6e8000c297bf71d",
+    menuCustomizationsCollectionId:"6878d9d60029eb2e1d64"
 }
 
 export const client = new Client()
@@ -20,6 +24,7 @@ client
 
 export const account = new Account(client)
 export const databases = new Databases(client)
+export const storage = new Storage(client)
 const avatars = new Avatars(client)
 
 
@@ -53,6 +58,7 @@ export const signIn = async ({email,password}:SignInParams)=>{
         const session =await account.createEmailPasswordSession(email,password);
 
     } catch (error) {
+         throw new Error(error as string);
         
     }
 }
@@ -73,3 +79,5 @@ export const getCurrentUser = async()=>{
     }
 
 }
+
+

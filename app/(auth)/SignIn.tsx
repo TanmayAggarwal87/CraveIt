@@ -15,11 +15,12 @@ export default function SignIn() {
         if(!form.email || !form.password){return Alert.alert("Error","Please Enter All Fields");}
         setIsSubmitting(true);
 
-        await signIn({email,password})
+        
 
         try {
-            
-            router.replace("/")
+           await signIn({email,password}) 
+            router.replace('/')
+            console.log("success")
         } catch (error:any) {
             Alert.alert("Error", error.message);
         }
