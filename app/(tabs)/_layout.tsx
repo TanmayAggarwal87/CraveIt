@@ -3,7 +3,7 @@ import { useAuthStore } from '@/store/auth.store';
 import { TabBarIconProps } from '@/type';
 import cn from "clsx";
 import { Redirect, Tabs } from 'expo-router';
-import { Image, Text, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 
 const TabBarIcon = ({focused, icon ,title}:TabBarIconProps)=>(
   <View className='tab-icon'>
@@ -22,30 +22,34 @@ export default function RootLayout() {
   if(!isAuthenticated)return <Redirect href="/SignIn"/>
     
   return (
-    <Tabs screenOptions={{headerShown:false,
-      tabBarShowLabel:false,
-      tabBarItemStyle: {
-       // Important for Android ripple
+    <Tabs
+  screenOptions={{
+    headerShown: false,
+    tabBarShowLabel: false,
+    tabBarStyle: {
+      borderRadius: 50,
+      marginHorizontal: 20,
+      height: 80,
+      position: 'absolute',
+      bottom: 40,
+      backgroundColor: 'white',
+      shadowColor: '#1a1a1a',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      elevation: 5,
     },
-    tabBarIconStyle: {
-      marginTop: -1 // Optional: Adjust icon position if needed
+    tabBarItemStyle: {
+      borderRadius: 9999,
     },
-    
-      tabBarStyle:{borderTopLeftRadius:50,
-                  borderTopRightRadius:50,
-                  borderBottomRightRadius:50,
-                  borderBottomLeftRadius:50 ,
-                  marginHorizontal:20,
-                  height:80,
-                  position:'absolute',
-                  bottom:40,
-                  backgroundColor:"white",
-                  shadowColor: '#1a1a1a',
-                  shadowOffset: { width: 0, height: 2 },
-                  shadowOpacity: 0.1,
-                  shadowRadius: 4,
-                  elevation: 5
-        }}}>
+    tabBarButton: (props) => (
+      <TouchableOpacity
+        {...props}
+        activeOpacity={0.8} // less than 1 means slight fade, no ripple
+      />
+    ),
+  }}
+>
       <Tabs.Screen 
       name='index'
       options={{
