@@ -1,3 +1,4 @@
+import CustomHeader from '@/components/CustomHeader';
 import { images } from '@/constants';
 import { useAuthStore } from '@/store/auth.store';
 import { TabBarIconProps } from '@/type';
@@ -72,7 +73,8 @@ export default function RootLayout() {
       name='profile'
       options={{
         title:"Profile",
-        tabBarIcon:(({focused})=><TabBarIcon title='Profile' icon={images.person} focused={focused}/>)
+        tabBarIcon:(({focused})=><TabBarIcon title='Profile' icon={images.person} focused={focused}/>),
+        header: ()=> <CustomHeader title='Profile'/>
       }}/>
     </Tabs>
   )
