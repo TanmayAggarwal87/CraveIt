@@ -112,4 +112,22 @@ export const getCategories = async ()=> {
     
 }
 
+export const deleteSession = async()=>{
+    try {
+         return await account.deleteSession('current')
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getItemById = async ({id}:{id:string})=>{
+    try {
+        const res = await databases.getDocument(appwriteConfig.databaseId,appwriteConfig.menuCollectionId,id)
+        return res;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 

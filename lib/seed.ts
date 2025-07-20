@@ -11,6 +11,7 @@ interface Customization {
     name: string;
     price: number;
     type: "topping" | "side" | "size" | "crust" | string; // extend as needed
+    image_url:string
 }
 
 interface MenuItem {
@@ -100,7 +101,9 @@ async function seed(): Promise<void> {
     // 3. Create Customizations
     const customizationMap: Record<string, string> = {};
     for (const cus of data.customizations) {
+        const uploadedImageCus = await uploadImageToStorage(cus.image_url);
         const doc = await databases.createDocument(
+            
             appwriteConfig.databaseId,
             appwriteConfig.customizationsCollectionId,
             ID.unique(),
@@ -108,6 +111,7 @@ async function seed(): Promise<void> {
                 name: cus.name,
                 price: cus.price,
                 type: cus.type,
+                image_url:uploadedImageCus
             }
         );
         customizationMap[cus.name] = doc.$id;

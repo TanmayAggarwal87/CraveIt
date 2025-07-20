@@ -6,14 +6,15 @@ import { getCategories, getMenu } from '@/lib/appwrite'
 import useAppwrite from '@/lib/useAppwrite'
 import { MenuItem } from '@/type'
 import cn from "clsx"
-import { useLocalSearchParams } from 'expo-router'
+import { useLocalSearchParams, useRouter } from 'expo-router'
 import React, { useEffect } from 'react'
-import { FlatList, Text, View } from 'react-native'
+import { FlatList, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 
 const search = () => {
   const { category, query } = useLocalSearchParams<{query: string; category: string}>()
+  const router = useRouter();
 
     const { data, refetch, loading } = useAppwrite({ fn: getMenu, params: { category,  query,  limit: 6, } });
     const { data: categories } = useAppwrite({ fn: getCategories });
@@ -30,9 +31,12 @@ const search = () => {
                     const isFirstRightColItem = index % 2 === 0;
 
                     return (
-                        <View className={cn("flex-1 max-w-[48%]", !isFirstRightColItem ? 'mt-10': 'mt-0')}>
+                        <TouchableOpacity onPress={()=>{router.push({pathname: "/products/[id]",params: { id: `${item.$id}` }})}} className={cn("w-[88%] max-w-fit", "flex-1", !isFirstRightColItem ? "mt-10" : "mt-0")}>
+                            
                             <MenuCard item={item as MenuItem} />
-                        </View>
+                           
+                        </TouchableOpacity>
+                        
                     )
                 }}
                 keyExtractor={item => item.$id}

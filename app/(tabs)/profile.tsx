@@ -1,9 +1,24 @@
 import { images } from '@/constants'
+import { deleteSession } from '@/lib/appwrite'
 import { useAuthStore } from '@/store/auth.store'
 import { router } from 'expo-router'
 import React from 'react'
-import { Image, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+
+async function logout (){
+  const {setUser,setIsAuthenticated} = useAuthStore.getState()
+  const res = await deleteSession() 
+  if(!res){
+    Alert.alert("Logout Failed","Error in logout")
+    console.log("s")
+  }
+
+  setUser(null);
+  setIsAuthenticated(false);
+  router.push("/(auth)/SignIn")
+  console.log("success")
+}
 
 const profile =  () => {
   const {user} = useAuthStore()
@@ -63,6 +78,14 @@ const profile =  () => {
 
         </View>
       </View>
+
+    <View className='flex justify-center items-center mt-16'>
+      <TouchableOpacity onPress={logout} className='py-4 px-5 bg-red-100 border-2 border-red-500 w-[90%] flex justify-center items-center rounded-xl'>
+        
+          <Text className='font-quicksand-semibold font-lg'>Logout</Text>
+        
+      </TouchableOpacity>
+    </View>
 
 
     </SafeAreaView>
