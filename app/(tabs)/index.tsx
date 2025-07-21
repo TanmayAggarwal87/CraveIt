@@ -2,12 +2,36 @@ import CartButton from "@/components/CartButton";
 import { images, offers } from "@/constants";
 import { useAuthStore } from "@/store/auth.store";
 import cn from "clsx";
+import { useRouter } from "expo-router";
 import { Fragment } from "react";
 import { FlatList, Image, Pressable, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+export type Offer = {
+  id: number;
+  title: string;
+  image: any;
+  color: string;
+  price: string | "";
+  name: string;
+};
+const handleOfferPress = (offer:Offer) => {
+  const router = useRouter()
+    // If the offer has a name, navigate with category filter
+    if (offer.name) {
+      router.push({ 
+        pathname: "/(tabs)/search",
+        params: { category: offer.name}
+      });
+    } else {
+      // If no name (like SUMMER COMBO), just go to search without filter
+      router.push({ pathname: "/(tabs)/search" });
+    }
+  }
+
 export default function Index() {
   const {user} = useAuthStore()
+  const router = useRouter()
   return (
     <SafeAreaView className="flex-1 bg-white">
       <View className=" flex flex-between flex-row w-full my-5 px-5">
@@ -32,7 +56,7 @@ export default function Index() {
           const isEven = index%2===0;
           return(
             <View >
-              <Pressable className={'offer-card'} style={{ backgroundColor: item.color }} android_ripple={{color:"#fffff22"}}>
+              <Pressable className={'offer-card'} style={{ backgroundColor: item.color }} android_ripple={{color:"#fffff22"}} onPress={() => {handleOfferPress(item)}}>
                 {({pressed})=>(
                   <Fragment>
                     <View className={cn("w-screen flex justify-between items-center pt-2 ",isEven ? "flex-row":"flex-row-reverse")}>

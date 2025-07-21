@@ -60,7 +60,7 @@ const search = () => {
                         <Filter categories={categories!} />
                     </View>
                 )}
-                ListEmptyComponent={() => !loading && <Text>No results</Text>}
+                ListEmptyComponent={() => !loading && <Text className='font-quicksand-bold text-xl text-gray-100'>No results</Text>}
             />
         </SafeAreaView>
     )

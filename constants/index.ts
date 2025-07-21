@@ -70,25 +70,32 @@ export const offers = [
         title: "SUMMER COMBO",
         image: burgerOne,
         color: "#D33B0D",
-        price: " ₹100"
+        price: "₹100",
+        name:"",
     },
     {
         id: 2,
         title: "BURGER BASH",
         image: burgerTwo,
         color: "#DF5A0C",
+        price: "",
+        name:"687ce1b00035bffb7a79",
     },
     {
         id: 3,
         title: "PIZZA PARTY",
         image: pizzaOne,
         color: "#084137",
+        price: "",
+        name:"687ce1b10007f2384e3e"
     },
     {
         id: 4,
         title: "BURRITO BLAST",
         image: buritto,
         color: "#EB920C",
+        price: "",
+        name:"687ce1b10017a05ddf29"
     },
 ];
 

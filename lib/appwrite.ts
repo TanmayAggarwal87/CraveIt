@@ -11,7 +11,8 @@ export const appwriteConfig={
     categoriesCollectionId:"6878d2ab0000c40e62d2",
     menuCollectionId:"6878d375000dae9f6c9a",
     customizationsCollectionId:"6878d6e8000c297bf71d",
-    menuCustomizationsCollectionId:"6878d9d60029eb2e1d64"
+    menuCustomizationsCollectionId:"6878d9d60029eb2e1d64",
+    addressCollectionId:"687dfb3c00134a74a430",
 }
 
 export const client = new Client()
