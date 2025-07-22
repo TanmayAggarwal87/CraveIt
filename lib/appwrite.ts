@@ -4,15 +4,15 @@ import { Account, Avatars, Client, Databases, ID, Query, Storage } from "react-n
 export const appwriteConfig={
     endpoint:process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT,
     projectId:process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID,
-    platform:"com.craveit.foodordering",
-    databaseId:"6875ff7c00152890caf1",
-    bucketId:"6878dab6001cdaa342b6",
-    userCollectionId:"6875ff9d0006120c3477",
-    categoriesCollectionId:"6878d2ab0000c40e62d2",
-    menuCollectionId:"6878d375000dae9f6c9a",
-    customizationsCollectionId:"6878d6e8000c297bf71d",
-    menuCustomizationsCollectionId:"6878d9d60029eb2e1d64",
-    addressCollectionId:"687dfb3c00134a74a430",
+    platform:process.env.EXPO_PUBLIC_PLATFORM,
+    databaseId:process.env.EXPO_PUBLIC_DATABASE_ID,
+    bucketId:process.env.EXPO_PUBLIC_BUCKET_ID,
+    userCollectionId:process.env.EXPO_PUBLIC_USER_COLLECTION_ID,
+    categoriesCollectionId:process.env.EXPO_PUBLIC_CATEGORIES_COLLECTION_ID,
+    menuCollectionId:process.env.EXPO_PUBLIC_MENU_COLLECTION_ID,
+    customizationsCollectionId:process.env.EXPO_PUBLIC_CUSTOMIZATIONS_COLLECTION_ID,
+    menuCustomizationsCollectionId:process.env.EXPO_PUBLIC_MENU_CUSTOMIZATIONS_COLLECTION_ID,
+    addressCollectionId:process.env.EXPO_PUBLIC_ADDRESS_COLLECTION_ID,
 }
 
 export const client = new Client()
@@ -20,7 +20,7 @@ export const client = new Client()
 client
 .setEndpoint(appwriteConfig.endpoint!)
 .setProject(appwriteConfig.projectId!)
-.setPlatform(appwriteConfig.platform)
+.setPlatform(appwriteConfig.platform!)
 
 
 export const account = new Account(client)
@@ -42,7 +42,7 @@ export const createUser = async ({email,password,name}:CreateUserParams)=>{
         await signIn({email,password})
         const avatarUrl  = avatars.getInitialsURL(name)
 
-        return await databases.createDocument(appwriteConfig.databaseId,appwriteConfig.userCollectionId,ID.unique(),{accountId:newAccount.$id,email,name,avatar:avatarUrl})
+        return await databases.createDocument(appwriteConfig.databaseId!,appwriteConfig.userCollectionId!,ID.unique(),{accountId:newAccount.$id,email,name,avatar:avatarUrl})
         
     } catch (error) {
         throw new Error(error as string)
@@ -69,7 +69,7 @@ export const getCurrentUser = async()=>{
         const currentAccount = await account.get()
         if(!currentAccount) throw Error
 
-        const CurrentUser = await databases.listDocuments(appwriteConfig.databaseId,appwriteConfig.userCollectionId,[Query.equal('accountId', currentAccount.$id)])
+        const CurrentUser = await databases.listDocuments(appwriteConfig.databaseId!,appwriteConfig.userCollectionId!,[Query.equal('accountId', currentAccount.$id)])
 
         if(!CurrentUser) throw Error;
 
@@ -91,7 +91,7 @@ export const getMenu = async ({category,query}:GetMenuParams)=>{
         if(query){queries.push(Query.search('name',query))}
 
 
-        const menus = await databases.listDocuments(appwriteConfig.databaseId,appwriteConfig.menuCollectionId,queries)
+        const menus = await databases.listDocuments(appwriteConfig.databaseId!,appwriteConfig.menuCollectionId!,queries)
         return menus.documents
     } catch (error) {
         throw new Error(error as string)
@@ -102,7 +102,7 @@ export const getMenu = async ({category,query}:GetMenuParams)=>{
 
 export const getCategories = async ()=> {
     try {
-        const categories = await databases.listDocuments(appwriteConfig.databaseId,appwriteConfig.categoriesCollectionId)
+        const categories = await databases.listDocuments(appwriteConfig.databaseId!,appwriteConfig.categoriesCollectionId!)
 
         return categories.documents;
     } catch (error) {
@@ -124,7 +124,7 @@ export const deleteSession = async()=>{
 
 export const getItemById = async ({id}:{id:string})=>{
     try {
-        const res = await databases.getDocument(appwriteConfig.databaseId,appwriteConfig.menuCollectionId,id)
+        const res = await databases.getDocument(appwriteConfig.databaseId!,appwriteConfig.menuCollectionId!,id)
         return res;
     } catch (error) {
         console.log(error)

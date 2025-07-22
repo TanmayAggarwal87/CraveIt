@@ -37,23 +37,23 @@ const data = dummyData as DummyData;
 
 async function clearAll(collectionId: string): Promise<void> {
     const list = await databases.listDocuments(
-        appwriteConfig.databaseId,
+        appwriteConfig.databaseId!,
         collectionId
     );
 
     await Promise.all(
         list.documents.map((doc) =>
-            databases.deleteDocument(appwriteConfig.databaseId, collectionId, doc.$id)
+            databases.deleteDocument(appwriteConfig.databaseId!, collectionId, doc.$id)
         )
     );
 }
 
 async function clearStorage(): Promise<void> {
-    const list = await storage.listFiles(appwriteConfig.bucketId);
+    const list = await storage.listFiles(appwriteConfig.bucketId!);
 
     await Promise.all(
         list.files.map((file) =>
-            storage.deleteFile(appwriteConfig.bucketId, file.$id)
+            storage.deleteFile(appwriteConfig.bucketId!, file.$id)
         )
     );
 }
@@ -70,28 +70,28 @@ async function uploadImageToStorage(imageUrl: string) {
     };
 
     const file = await storage.createFile(
-        appwriteConfig.bucketId,
+        appwriteConfig.bucketId!,
         ID.unique(),
         fileObj
     );
 
-    return storage.getFileViewURL(appwriteConfig.bucketId, file.$id);
+    return storage.getFileViewURL(appwriteConfig.bucketId!, file.$id);
 }
 
 async function seed(): Promise<void> {
     // 1. Clear all
-    await clearAll(appwriteConfig.categoriesCollectionId);
-    await clearAll(appwriteConfig.customizationsCollectionId);
-    await clearAll(appwriteConfig.menuCollectionId);
-    await clearAll(appwriteConfig.menuCustomizationsCollectionId);
+    await clearAll(appwriteConfig.categoriesCollectionId!);
+    await clearAll(appwriteConfig.customizationsCollectionId!);
+    await clearAll(appwriteConfig.menuCollectionId!);
+    await clearAll(appwriteConfig.menuCustomizationsCollectionId!);
     await clearStorage();
 
     // 2. Create Categories
     const categoryMap: Record<string, string> = {};
     for (const cat of data.categories) {
         const doc = await databases.createDocument(
-            appwriteConfig.databaseId,
-            appwriteConfig.categoriesCollectionId,
+            appwriteConfig.databaseId!,
+            appwriteConfig.categoriesCollectionId!,
             ID.unique(),
             cat
         );
@@ -104,8 +104,8 @@ async function seed(): Promise<void> {
         const uploadedImageCus = await uploadImageToStorage(cus.image_url);
         const doc = await databases.createDocument(
             
-            appwriteConfig.databaseId,
-            appwriteConfig.customizationsCollectionId,
+            appwriteConfig.databaseId!,
+            appwriteConfig.customizationsCollectionId!,
             ID.unique(),
             {
                 name: cus.name,
@@ -123,8 +123,8 @@ async function seed(): Promise<void> {
         const uploadedImage = await uploadImageToStorage(item.image_url);
 
         const doc = await databases.createDocument(
-            appwriteConfig.databaseId,
-            appwriteConfig.menuCollectionId,
+            appwriteConfig.databaseId!,
+            appwriteConfig.menuCollectionId!,
             ID.unique(),
             {
                 name: item.name,
@@ -143,8 +143,8 @@ async function seed(): Promise<void> {
         // 5. Create menu_customizations
         for (const cusName of item.customizations) {
             await databases.createDocument(
-                appwriteConfig.databaseId,
-                appwriteConfig.menuCustomizationsCollectionId,
+                appwriteConfig.databaseId!,
+                appwriteConfig.menuCustomizationsCollectionId!,
                 ID.unique(),
                 {
                     menu: doc.$id,
