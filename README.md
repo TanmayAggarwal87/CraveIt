@@ -1,50 +1,118 @@
-# Welcome to your Expo app 👋
+# 🍽️ CraveIt – A React Native Food Ordering App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**CraveIt** is a modern mobile food ordering app built using **React Native (Expo)**, **Appwrite**, **NativeWind**, and **Zustand** for state management.
 
-## Get started
+This project marks my **first real dive into mobile app development**. I started by following a tutorial, but I didn’t stop there — I took things further by adding my own features like **dynamic routing for each food item**, and **secure database handling** for user cart and address data.
 
-1. Install dependencies
+---
+
+## 🚀 Features
+
+* 🍕 **Real-Time Menu & Categories** – Powered by Appwrite collections
+* 🔍 **Search & Filter** – Easily find what you're craving
+* 🛒 **Persistent Cart** – Save customizations like toppings (e.g., extra cheese, jalapeños)
+* 📦 **Address Management** – Store and retrieve user delivery addresses securely
+* 🧭 **Dynamic Food Routes** – Built using `expo-router`
+* ⚙️ **State Management** – Powered by Zustand
+* 💅 **Clean UI** – Styled using NativeWind (Tailwind for React Native)
+
+---
+
+## 🛠 Tech Stack
+
+| Tech         | Description                                  |
+| ------------ | -------------------------------------------- |
+| React Native | Cross-platform mobile app development (Expo) |
+| Appwrite     | Backend-as-a-service: DB, Auth, File storage |
+| Zustand      | Minimal state management for React           |
+| NativeWind   | Utility-first CSS styling for React Native   |
+| Expo Router  | File-based routing for Expo projects         |
+
+---
+
+## 📂 Environment Variables
+
+All sensitive data is loaded via environment variables for safety and flexibility.
+
+```.env
+EXPO_PUBLIC_APPWRITE_ENDPOINT=your-appwrite-endpoint
+EXPO_PUBLIC_APPWRITE_PROJECT_ID=your-appwrite-project-id
+EXPO_PUBLIC_PLATFORM=your-platform-name
+EXPO_PUBLIC_DATABASE_ID=your-database-id
+EXPO_PUBLIC_BUCKET_ID=your-storage-bucket-id
+
+EXPO_PUBLIC_USER_COLLECTION_ID=user-collection-id
+EXPO_PUBLIC_CATEGORIES_COLLECTION_ID=categories-collection-id
+EXPO_PUBLIC_MENU_COLLECTION_ID=menu-collection-id
+EXPO_PUBLIC_CUSTOMIZATIONS_COLLECTION_ID=customizations-collection-id
+EXPO_PUBLIC_MENU_CUSTOMIZATIONS_COLLECTION_ID=menu-customizations-collection-id
+EXPO_PUBLIC_ADDRESS_COLLECTION_ID=address-collection-id
+
+```
+
+> 🛡️ Ensure all the above variables are defined in your `.env` file and match your Appwrite project settings.
+
+---
+🗃️ Appwrite Database Structure
+Below is a high-level overview of the collections used in CraveIt:
+
+| Collection Name      | Purpose                                         |
+| -------------------- | ----------------------------------------------- |
+| `users`              | Stores user profiles and info                   |
+| `categories`         | Menu categories like Pizza, Drinks, etc.        |
+| `menu`               | Individual food items                           |
+| `customizations`     | Customizable options (e.g., toppings)           |
+| `menuCustomizations` | Mapping of menu items to allowed customizations |
+| `address`            | Stores user delivery addresses                  |
+
+---
+
+## 📲 Getting Started
+
+1. **Clone the Repository**
+
+   ```bash
+   git clone https://github.com/your-username/CraveIt.git
+   cd CraveIt
+   ```
+
+2. **Install Dependencies**
 
    ```bash
    npm install
    ```
 
-2. Start the app
+3. **Set Up Environment**
+   Create a `.env` file in the root and define the Appwrite variables listed above.
+
+4. **Run the App**
 
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🧠 What I Learned
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+* Basics of React Native and navigation with `expo-router`
+* State handling with Zustand (and why it's awesome)
+* Setting up and connecting to a backend (Appwrite)
+* Working with environment variables and secure data handling
+* Extending a tutorial into a real-world use case
 
-## Get a fresh project
+---
 
-When you're ready, run:
+## 🧑‍💻 Author
 
-```bash
-npm run reset-project
-```
+**Tanmay Aggarwal**
+Aspiring full-stack developer | Exploring mobile dev | [GitHub](https://github.com/TanmayAggarwal87) | [LinkedIn](https://www.linkedin.com/in/tanmay-aggarwal-2aa95632a)
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## ⭐️ Show Some Love
 
-To learn more about developing your project with Expo, look at the following resources:
+If you liked this project or found it helpful, feel free to leave a ⭐ on the repo!
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
 
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
